@@ -1,12 +1,12 @@
-package Revature.Project1;
+package Revature.Project0;
 
-import org.junit.jupiter.api.Test;
 
 import Daos.AccountDao;
+
 import Daos.UserDao;
 import beans.Account;
 import beans.User;
-
+import org.junit.*;
 public class BankTest {
 
 	@Test
