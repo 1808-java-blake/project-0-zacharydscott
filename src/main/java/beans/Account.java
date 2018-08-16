@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import Daos.AccountDao;
-
+/**Accounts call on the current account number to generate unique account numbers.
+ * Withdraw checks that amount is less than balance, so balance cannot be negative.
+ * 
+ *
+ */
 public class Account implements Serializable{
 	private int accountNumber;
 	private String accountType;
@@ -36,7 +40,7 @@ public class Account implements Serializable{
 	}
 
 	public String withdraw(Long amount) {
-		if (amount < this.balance) {
+		if (amount < this.balance && amount >= 0) {
 			this.balance -= amount;
 			this.transactions.add(-amount);
 			return null;
@@ -54,8 +58,10 @@ public class Account implements Serializable{
 		return build.toString();
 	}
 	public void deposit(Long amount) {
+		if (amount >= 0) {
 		this.balance += amount;
 		this.transactions.add(amount);
+		}
 	}
 
 	public String getAccountType() {

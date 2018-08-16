@@ -39,6 +39,7 @@ public class HomeScreen implements Screen{
 			System.out.println("Special Admin controls.\n4: access user\n5: access account\n6:"
 					+ "Make user admin\n7: Get a list of users\n8: get a list of accounts");
 		}
+		// Switch case used to translate user input into each function
 		switch (scan.nextLine()) {
 		case "1": 
 			System.out.println("Which Account?");

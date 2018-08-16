@@ -15,7 +15,10 @@ import beans.Account;
 
 public class AccountSerializer implements AccountDao{
 	public static final AccountSerializer us = new AccountSerializer();
-
+/**An account dao was needed to store accounts independently from accounts to store them seperately.
+ * Standard funcations of finding, logging, and updating accounts.
+ * Account numbers are generated in the dao as well, so that duplicate account numbers arren't generated.
+ */
 	@Override
 	public void logNewAccount(Account a) {
 			if (a ==null) {

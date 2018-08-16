@@ -36,6 +36,7 @@ public class AccountScreen implements Screen {
 			return new AccountScreen(cUser, cAccount,"");
 		}
 		switch (userSelection) {
+		// Switch case used to translate user input into each function
 		case 1:
 			output = "Account number: " + cAccount.getAccountNumber() + ". Account Holders: "
 					+ cAccount.getAccountHoldersList() + ". Acount Type: " + cAccount.getAccountType()
