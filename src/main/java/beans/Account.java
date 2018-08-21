@@ -21,7 +21,6 @@ public class Account implements Serializable{
 		super();
 		this.accountType = accountType;
 		this.accountHolders = new String[1];
-		this.balance = balance;
 		this.transactions = new ArrayList<Long>();
 		deposit(balance);
 		this.accountNumber = accountNumber;
@@ -31,7 +30,6 @@ public class Account implements Serializable{
 		super();
 		this.accountType = accountType;
 		this.accountHolders = new String[1];
-		this.balance = balance;
 		this.transactions = new ArrayList<Long>();
 		deposit(balance);
 	}

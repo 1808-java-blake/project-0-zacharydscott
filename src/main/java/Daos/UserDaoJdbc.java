@@ -78,7 +78,7 @@ public class UserDaoJdbc implements UserDao{
 				Connection conn = dBCU.getConnection();
 				PreparedStatement ps = conn.prepareStatement(
 						"SELECT * FROM users "
-						+ "WHERE username = ?");
+						+ "WHERE username = ?;");
 				ps.setString(1, username);
 				ResultSet rs = ps.executeQuery();
 				String un;
@@ -90,7 +90,7 @@ public class UserDaoJdbc implements UserDao{
 					pass = rs.getString("password");
 					name = rs.getString("full_name");
 					age = rs.getInt("age");
-					User foundUser = new User(un,pass,name,age);
+					User foundUser = new User(un,pass,name,age,true);
 					conn.close();
 					return foundUser;
 					}
@@ -107,13 +107,14 @@ public class UserDaoJdbc implements UserDao{
 			Connection conn = dBCU.getConnection();
 			PreparedStatement ps = conn.prepareStatement(
 					"UPDATE users SET "
-					+ "username =?, password = ?,full_name = ?, age = ? "
+					+ "username =?, password = ?,full_name = ?, age = ?,is_admin "
 					+ "WHERE username = ?;");
 			ps.setString(1, u.getUsername());
 			ps.setString(2, u.getPassword());
 			ps.setString(3, u.getName());
 			ps.setInt(4, u.getAge());
 			ps.setString(5, u.getUsername());
+			ps.setBoolean(6, u.isAdmin());
 			int recordCreated = ps.executeUpdate();
 			conn.close();
 			return true;

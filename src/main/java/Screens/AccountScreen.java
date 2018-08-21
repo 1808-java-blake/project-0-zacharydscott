@@ -38,8 +38,7 @@ public class AccountScreen implements Screen {
 		switch (userSelection) {
 		// Switch case used to translate user input into each function
 		case 1:
-			output = "Account number: " + cAccount.getAccountNumber() + ". Account Holders: "
-					+ cAccount.getAccountHoldersList() + ". Acount Type: " + cAccount.getAccountType()
+			output = "Account number: " + cAccount.getAccountNumber() + ". Acount Type: " + cAccount.getAccountType()
 					+ ". Current Balance:" + cAccount.getBalance();
 			break;
 
@@ -53,7 +52,7 @@ public class AccountScreen implements Screen {
 				cAccount.withdraw(withdrawl);
 				output = "Withdraw Successful. Remaining Balance is: " +cAccount.getBalance();
 			} else {
-				output = "Withdrawl Failed. Make sure amount is positive.";
+				output = "Withdrawl Failed. Make sure amount is positive and less tha balance.";
 			}
 			}catch (NumberFormatException e) {
 				output = "Illegal Entry: enter number";
@@ -67,7 +66,7 @@ public class AccountScreen implements Screen {
 			try {
 				deposit = Long.valueOf(scan.nextLine());
 			if (deposit > 0) {
-				cAccount.withdraw(deposit);
+				cAccount.deposit(deposit);
 				output = "Deposit Successful. Remaining Balance is: " +cAccount.getBalance();
 			} else {
 				output = "Deposit Failed. Make sure amount is positive.";

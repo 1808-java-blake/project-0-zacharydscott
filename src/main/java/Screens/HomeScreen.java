@@ -29,7 +29,7 @@ public class HomeScreen implements Screen{
 				+"\n2: Make New Account" 
 				+"\n3: Log out");
 		if (cUser.isAdmin()) {
-			System.out.println("Special Admin controls.\n4: access user\n5: access account\n6:"
+			System.out.println("Special Admin controls.\n4: access user\n5: access account\n6: "
 					+ "Make user admin\n7: Get a list of users\n8: get a list of accounts");
 		}
 		// Switch case used to translate user input into each function
