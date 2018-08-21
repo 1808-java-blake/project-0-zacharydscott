@@ -15,5 +15,7 @@ public class artificialAdmin {
 		AccountDao ad = AccountDao.cAccountDao;
 		System.out.println(ud.userList());
 		System.out.println(ad.accountList());
+		Account aaa = new Account(123123L,"checking");
+		System.out.println(ad.getTransactions(ad.findAccount(1)));
 	}
 }

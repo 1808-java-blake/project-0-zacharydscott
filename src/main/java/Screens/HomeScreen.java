@@ -15,19 +15,12 @@ public class HomeScreen implements Screen{
 	private AccountDao ad = AccountDao.cAccountDao;
 	private Scanner scan = new Scanner(System.in);
 	private User cUser;
-	private ArrayList<Account> cUserAccounts;
 	private String output;
 		
 	public HomeScreen(User cUser,String output) {
 			this.output = output;
 			this.cUser = cUser;
-			 ArrayList<Integer> cAccountNumbers = cUser.getAccounts();
-			 this.cUserAccounts = new ArrayList<Account>();
-				for (int accountNumber: cAccountNumbers) {
-						cUserAccounts.add(ad.findAccount(accountNumber));
-					}
-		}
-	
+	}
 	public Screen start() {
 		System.out.println(Screen.header);
 		System.out.println("Home Screen for " + cUser.getName());
@@ -43,10 +36,7 @@ public class HomeScreen implements Screen{
 		switch (scan.nextLine()) {
 		case "1": 
 			System.out.println("Which Account?");
-			for (Account acc: cUserAccounts) {
-				System.out.println("Account number: " + acc.getAccountNumber() + ". Accoount Type: "
-						+ acc.getAccountType() + ". Balance: " + acc.getBalance());
-			}
+			System.out.println(ad.getUserAccounts(cUser));
 			System.out.println("Type account number:");
 			int accSelect;
 			try {
@@ -56,15 +46,15 @@ public class HomeScreen implements Screen{
 				return new HomeScreen(cUser,output);
 			}
 			
-			for (Account acc: cUserAccounts) {
-				if (acc.getAccountNumber() == accSelect) {
-					return new AccountScreen(cUser, acc, "");
+			for (int acc: cUser.getAccounts()) {
+				if (acc == accSelect) {
+					return new AccountScreen(cUser, ad.findAccount(accSelect), "");
 				}
 			}
 			output = "Invalid Selection";
 			return new HomeScreen(cUser,output);
 		case "2":
-			return new AccountRegistrationScreen(cUser);
+			return new AccountRegistrationScreen(cUser,"");
 		case "3":
 			return new LoginScreen("Logout Successful.");
 		case "4":

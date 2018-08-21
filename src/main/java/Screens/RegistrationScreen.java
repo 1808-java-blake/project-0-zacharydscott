@@ -37,10 +37,10 @@ public class RegistrationScreen implements Screen{
 				output = "number required for age";
 				return new RegistrationScreen(output);
 			}
-		System.out.println("Enter Mailing Address");
-		String mailingAddress = scan.nextLine();
-		User newUser = new User(username, name, password, age, mailingAddress);
-		ud.logNewUser(newUser);
-		return new LoginScreen("Registration Successful. Feel free to login now.");
+		User newUser = new User(username, name, password, age);
+		if(ud.logNewUser(newUser)) {
+			return new LoginScreen("Registration Successful. Feel free to login now.");
+		}
+		return new LoginScreen("Registration Failed. Username may be taken.");
 	}
 }

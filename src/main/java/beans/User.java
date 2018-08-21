@@ -8,7 +8,6 @@ public class User implements Serializable{
 	private String name;
 	private String password;
 	private int age;
-	private String mailingAddress;
 	private ArrayList<Integer> accounts;
 	private Boolean admin;
 	
@@ -16,36 +15,33 @@ public class User implements Serializable{
 		super();
 	}
 	
-	public User(String username, String name, String password, int age, String mailingAddress) {
+	public User(String username, String name, String password, int age) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.password = password;
 		this.age = age;
-		this.mailingAddress = mailingAddress;
 		this.accounts = new ArrayList<Integer>();
 		this.admin = false;
 	}
 
-	public User(String username, String name, String password, int age, String mailingAddress, ArrayList<Integer> accounts) {
+	public User(String username, String name, String password, int age, ArrayList<Integer> accounts) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.password = password;
 		this.age = age;
-		this.mailingAddress = mailingAddress;
 		this.accounts = accounts;
 		this.admin = false;
 	}
 
-	public User(String username, String name, String password, int age, String mailingAddress, ArrayList<Integer> accounts, Boolean isAdmin) {
+	public User(String username, String name, String password, int age, Boolean isAdmin) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.password = password;
 		this.age = age;
-		this.mailingAddress = mailingAddress;
-		this.accounts = accounts;
+		this.accounts = new ArrayList<Integer>();
 		this.admin = isAdmin;
 	}
 
@@ -77,20 +73,13 @@ public class User implements Serializable{
 		this.age = age;
 	}
 
-	public String getMailingAddress() {
-		return mailingAddress;
-	}
-
-	public void setMailingAddress(String mailingAddress) {
-		this.mailingAddress = mailingAddress;
-	}
-
+	
 	public ArrayList<Integer> getAccounts() {
 		return accounts;
 	}
 
-	public void addAccount(Account acc) {
-		this.accounts.add(acc.getAccountNumber());
+	public void addAccount(int a) {
+		this.accounts.add(a);
 	}
 	
 	public void giveAdmin(User accessingUser) {
@@ -107,7 +96,7 @@ public class User implements Serializable{
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", name=" + name + ", password=" + password + ", age=" + age
-				+ ", mailingAddress=" + mailingAddress + ", accounts=" + accounts + ", isAdmin=" + admin + "]";
+				+ ", accounts=" + accounts + ", isAdmin=" + admin + "]";
 	}
 
 	@Override
@@ -117,7 +106,6 @@ public class User implements Serializable{
 		result = prime * result + ((accounts == null) ? 0 : accounts.hashCode());
 		result = prime * result + age;
 		result = prime * result + ((admin == null) ? 0 : admin.hashCode());
-		result = prime * result + ((mailingAddress == null) ? 0 : mailingAddress.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -144,11 +132,6 @@ public class User implements Serializable{
 			if (other.admin != null)
 				return false;
 		} else if (!admin.equals(other.admin))
-			return false;
-		if (mailingAddress == null) {
-			if (other.mailingAddress != null)
-				return false;
-		} else if (!mailingAddress.equals(other.mailingAddress))
 			return false;
 		if (name == null) {
 			if (other.name != null)

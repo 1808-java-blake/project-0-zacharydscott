@@ -45,21 +45,42 @@ public class AccountScreen implements Screen {
 
 		case 2:
 			System.out.println("Withdrawl amount:");
-			Long withdrawl = Long.valueOf(scan.nextLine());
-			cAccount.withdraw(withdrawl);
-			output = "Withdraw Successful. Remaining Balance is: " +cAccount.getBalance();
+			Long withdrawl;
+			try {
+				withdrawl = Long.valueOf(scan.nextLine());
+				
+			if (withdrawl > 0 && withdrawl < cAccount.getBalance()) {
+				cAccount.withdraw(withdrawl);
+				output = "Withdraw Successful. Remaining Balance is: " +cAccount.getBalance();
+			} else {
+				output = "Withdrawl Failed. Make sure amount is positive.";
+			}
+			}catch (NumberFormatException e) {
+				output = "Illegal Entry: enter number";
+			}
+			
 			break;
 
 		case 3:
 			System.out.println("Deposit amount: ");
-			Long deposit = Long.valueOf(scan.nextLine());
-			cAccount.deposit(deposit);
-			output = "Deposit Successful. Current Balance is: " +cAccount.getBalance();
+			Long deposit;
+			try {
+				deposit = Long.valueOf(scan.nextLine());
+			if (deposit > 0) {
+				cAccount.withdraw(deposit);
+				output = "Deposit Successful. Remaining Balance is: " +cAccount.getBalance();
+			} else {
+				output = "Deposit Failed. Make sure amount is positive.";
+			}
+			}catch (NumberFormatException e) {
+				output = "Illegal Entry: enter number";
+			}
 			break;
-
 		case 4:
 			System.out.println("Enter wiring account number");
-			int wiringAccNum = Integer.valueOf(scan.nextLine());
+			int wiringAccNum;
+			try {
+				wiringAccNum = Integer.valueOf(scan.nextLine());
 			Account wiringAccount = ad.findAccount(wiringAccNum);
 			if (wiringAccount == null) {
 				output = "Wiring account not found. Try again.";
@@ -80,9 +101,12 @@ public class AccountScreen implements Screen {
 			wiringAccount.deposit(wiringAmount);
 			ad.updateAccount(wiringAccount);
 			output = "Funds Transferred!";
+			}catch (NumberFormatException e) {
+				output = "Illegal Entry: enter number";
+			}
 			break;
 		case 5:
-			output = cAccount.getTransactions();
+			output = ad.getTransactions(cAccount);
 			return new AccountScreen(cUser,cAccount, output);
 		case 6:
 			ad.updateAccount(cAccount);

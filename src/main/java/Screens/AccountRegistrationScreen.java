@@ -12,13 +12,16 @@ public class AccountRegistrationScreen implements Screen {
 	private AccountDao ad = AccountDao.cAccountDao;
 	private Scanner scan = new Scanner(System.in);
 	private User cUser;
+	private String output;
 
-	public AccountRegistrationScreen(User cUser) {
+	public AccountRegistrationScreen(User cUser,String output) {
 		this.cUser = cUser;
+		this.output = output;
 	}
 
 	public Screen start() {
 		System.out.println(Screen.header);
+		System.out.println(output);
 		System.out.println("Welcome to Account Registration. \n What kind of Account?");
 		System.out.println("Type 1 for Checking, 2 for Savings, 3 for Joint Checking, 4 for Joint Savings");
 		int numHolders;
@@ -43,8 +46,8 @@ public class AccountRegistrationScreen implements Screen {
 			accType = "Joint Savings";
 			break;
 		default:
-			System.out.println("Invalid selection. Please try again");
-			return new AccountRegistrationScreen(cUser);
+			output = "Invalid selection. Please try again";
+			return new AccountRegistrationScreen(cUser,output);
 
 		}
 		User secondUser = null;
@@ -61,30 +64,30 @@ public class AccountRegistrationScreen implements Screen {
 			secondUser = ud.findUser(holders[1], password);
 			if (secondUser == null) {
 				holders = new String[0];
-				System.out.println("Second User couldn't be accessed.");
-				return new AccountRegistrationScreen(cUser);
+				output = "Second User couldn't be accessed.";
+				return new AccountRegistrationScreen(cUser,output);
 				}
 		}
 		else {
-			System.out.println("Something went wrong. Please try again.");
-			
-			return new AccountRegistrationScreen(cUser);
+			output = "Something went wrong. Please try again.";
+			return new AccountRegistrationScreen(cUser,output);
 			}
 		System.out.println("Enter initial balance");
 		Long balance;
 		try {
 			balance = Long.valueOf(scan.nextLine());
 		} catch (NumberFormatException e) {
-			System.out.println("Initial Balance must be a pure number");
-			return new AccountRegistrationScreen(cUser);
+			output = "Initial Balance must be a pure number";
+			return new AccountRegistrationScreen(cUser, output);
 		}
 		Account newAccount = new Account(accType, holders, balance);
-		cUser.addAccount(newAccount);
 		ad.logNewAccount(newAccount);
+		System.out.println(cUser.getUsername());
 		ud.updateUser(cUser);
+		ad.connectUserAccount(cUser, newAccount);
 		if (secondUser != null) {
-			secondUser.addAccount(newAccount);
 			ud.updateUser(secondUser);
+			ad.connectUserAccount(secondUser, newAccount);
 		}
 		System.out.println("Succes. Acount created with a balance of " + newAccount.getBalance());
 		return new HomeScreen(cUser,"Account Registered! Acount created with a balance of " 

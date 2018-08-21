@@ -17,15 +17,23 @@ public class Account implements Serializable{
 	private ArrayList<Long> transactions;
 	private static AccountDao cAccountDao = AccountDao.cAccountDao;
 	
-	public Account(String accountType, String[] accountHolders, long balance, ArrayList<Long> transactions) {
+	public Account(int accountNumber,  long balance, String accountType) {
 		super();
 		this.accountType = accountType;
-		this.accountHolders = accountHolders;
-		this.balance = 0L;
-		this.transactions = transactions;
+		this.accountHolders = new String[1];
+		this.balance = balance;
+		this.transactions = new ArrayList<Long>();
 		deposit(balance);
-		this.accountNumber = cAccountDao.getAccountNumber();
-		cAccountDao.incrementAccountNumber();
+		this.accountNumber = accountNumber;
+	}
+	
+	public Account(long balance, String accountType) {
+		super();
+		this.accountType = accountType;
+		this.accountHolders = new String[1];
+		this.balance = balance;
+		this.transactions = new ArrayList<Long>();
+		deposit(balance);
 	}
 	
 	public Account(String accountType, String[] accountHolders, long balance) {
@@ -35,19 +43,21 @@ public class Account implements Serializable{
 		this.balance = 0L;
 		this.transactions = new ArrayList<Long>();
 		this.deposit(balance);
-		this.accountNumber = cAccountDao.getAccountNumber();
-		cAccountDao.incrementAccountNumber();
 	}
 
 	public String withdraw(Long amount) {
 		if (amount < this.balance && amount >= 0) {
 			this.balance -= amount;
-			this.transactions.add(-amount);
 			return null;
 		} else {
 			return "Failed to withdrawl. Check that withdrawl is less than balance.";
 		}
 
+	}
+	public void deposit(Long amount) {
+		if (amount >= 0) {
+		this.balance += amount;
+		}
 	}
 
 	public String getAccountHoldersList() {
@@ -56,12 +66,6 @@ public class Account implements Serializable{
 			build.append(s);
 		}
 		return build.toString();
-	}
-	public void deposit(Long amount) {
-		if (amount >= 0) {
-		this.balance += amount;
-		this.transactions.add(amount);
-		}
 	}
 
 	public String getAccountType() {
@@ -87,25 +91,6 @@ public class Account implements Serializable{
 	public long getBalance() {
 		return balance;
 	}
-
-	public String getTransactions() {
-		StringBuilder transactionList = new StringBuilder();
-		transactionList.append("Initial Balance: " + String.valueOf(transactions.get(0))+"\n");
-		transactionList.append("Current Balance: " + this.getBalance()+ "\n" +
-		"Transaction History:\n");
-		long entry;
-		for (int i = 1; i< this.transactions.size(); i++) {
-			entry = transactions.get(i);
-			if (entry >= 0 ) {
-				transactionList.append("  "+ i + ": Deposited " + String.valueOf(entry) + "\n");
-			}
-			else {
-				transactionList.append("  " +i + ": Withrdrew " + String.valueOf(-entry) + "\n");
-			}
-		}
-		return transactionList.toString();
-	}		
-
 
 	public int getAccountNumber() {
 		return accountNumber;
